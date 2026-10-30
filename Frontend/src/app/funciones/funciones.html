@@ -1,0 +1,168 @@
+
+<div class="container mt-4">
+
+  <h2>Gestión de Funciones</h2>
+
+  <form (ngSubmit)="guardarFuncion()">
+
+    <div class="mb-3">
+      <label class="form-label">Película:</label>
+
+      <select
+        class="form-select"
+        name="pelicula"
+        [(ngModel)]="funcion.idPelicula"
+        required>
+
+        <option [ngValue]="null">
+          Seleccione una película
+        </option>
+
+        <option
+          *ngFor="let item of peliculas"
+          [ngValue]="item.idPelicula">
+          {{ item.titulo }}
+        </option>
+
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Sala:</label>
+
+      <select
+        class="form-select"
+        name="sala"
+        [(ngModel)]="funcion.idSala"
+        required>
+
+        <option [ngValue]="null">
+          Seleccione una sala
+        </option>
+
+        <option
+          *ngFor="let item of salas"
+          [ngValue]="item.idSala">
+          {{ item.nombre }}
+        </option>
+
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Fecha:</label>
+
+      <input
+        type="date"
+        class="form-control"
+        name="fecha"
+        [(ngModel)]="funcion.fecha"
+        required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Hora:</label>
+
+      <input
+        type="time"
+        class="form-control"
+        name="hora"
+        [(ngModel)]="funcion.hora"
+        required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Precio de entrada (Q):</label>
+
+      <input
+        type="number"
+        class="form-control"
+        name="precio"
+        min="0.01"
+        step="0.01"
+        [(ngModel)]="funcion.precioEntrada"
+        required>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary me-2">
+      {{ funcion.idFuncion === null ? 'Guardar' : 'Actualizar' }}
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="limpiar()">
+      Limpiar
+    </button>
+
+  </form>
+
+  <hr>
+
+  <h3>Funciones registradas</h3>
+
+  <div class="table-responsive">
+
+    <table class="table table-bordered table-striped">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Película</th>
+          <th>Sala</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let item of funciones">
+
+          <td>{{ item.idFuncion }}</td>
+
+          <td>
+            {{ obtenerPelicula(item.idPelicula) }}
+          </td>
+
+          <td>
+            {{ obtenerSala(item.idSala) }}
+          </td>
+
+          <td>{{ item.fecha }}</td>
+
+          <td>{{ item.hora }}</td>
+
+          <td>
+            Q {{ item.precioEntrada | number:'1.2-2' }}
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="btn btn-warning btn-sm me-2"
+              (click)="editarFuncion(item)">
+              Editar
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="eliminarFuncion(item.idFuncion)">
+              Eliminar
+            </button>
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

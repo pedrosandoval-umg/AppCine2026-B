@@ -1,0 +1,55 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Anuncios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  @for (anuncio of anuncios; track anuncio.idAnuncio) {
+
+    <ion-card>
+
+      @if (anuncio.imagen) {
+        <img
+          [src]="anuncio.imagen"
+          [alt]="anuncio.titulo"
+        />
+      }
+
+      <ion-card-header>
+        <ion-card-title>
+          {{ anuncio.titulo }}
+        </ion-card-title>
+
+        <ion-card-subtitle>
+          {{ anuncio.fechaPublicacion | date:'dd/MM/yyyy' }}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{ anuncio.descripcion }}
+      </ion-card-content>
+
+      <ion-card-content>
+        {{ anuncio.tipo }}
+      </ion-card-content>
+
+       <ion-card-content>
+        {{ anuncio.tipo2 }}
+      </ion-card-content>
+
+    </ion-card>
+
+  } @empty {
+
+    <ion-card>
+      <ion-card-content>
+        No hay anuncios disponibles.
+      </ion-card-content>
+    </ion-card>
+
+  }
+
+</ion-content>

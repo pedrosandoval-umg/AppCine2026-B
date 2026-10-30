@@ -1,0 +1,136 @@
+<div class="container mt-4">
+  <h2>Gestión de Películas</h2>
+
+  <form (ngSubmit)="guardarPelicula()">
+    <div class="mb-3">
+      <label class="form-label">Título:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="titulo"
+        [(ngModel)]="pelicula.titulo"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Sinopsis:</label>
+      <textarea class="form-control" name="sinopsis" [(ngModel)]="pelicula.sinopsis" required>
+      </textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Duración (minutos):</label>
+      <input
+        type="number"
+        class="form-control"
+        name="duracion"
+        min="1"
+        [(ngModel)]="pelicula.duracionMinutos"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Género:</label>
+      <select class="form-select" name="genero" [(ngModel)]="pelicula.idGenero" required>
+        <option [ngValue]="null">Seleccione un género</option>
+
+        <option *ngFor="let item of generos" [ngValue]="item.idGenero">
+          {{ item.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Clasificación:</label>
+      <select
+        class="form-select"
+        name="clasificacion"
+        [(ngModel)]="pelicula.idClasificacion"
+        required
+      >
+        <option [ngValue]="null">Seleccione una clasificación</option>
+
+        <option *ngFor="let item of clasificaciones" [ngValue]="item.idClasificacion">
+          {{ item.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Imagen promocional:</label>
+      <input
+        type="file"
+        class="form-control"
+        accept="image/*"
+        (change)="seleccionarImagenPromocional($event)"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary me-2">
+      {{ pelicula.idPelicula === null ? 'Guardar' : 'Actualizar' }}
+    </button>
+
+    <button type="button" class="btn btn-secondary" (click)="limpiar()">Limpiar</button>
+  </form>
+
+  <hr />
+
+  <h3>Películas registradas</h3>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Sinopsis</th>
+          <th>Duración</th>
+          <th>Género</th>
+          <th>Clasificación</th>
+          <th>Imagen</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of peliculas">
+          <td>{{ item.idPelicula }}</td>
+          <td>{{ item.titulo }}</td>
+          <td>{{ item.sinopsis }}</td>
+          <td>{{ item.duracionMinutos }} min</td>
+          <td>{{ obtenerGenero(item.idGenero) }}</td>
+          <td>{{ obtenerClasificacion(item.idClasificacion) }}</td>
+
+          <td>
+            <img
+              *ngIf="item.imagenPromocional"
+              [src]="item.imagenPromocional"
+              alt="Imagen promocional"
+              width="80"
+            />
+          </td>
+
+          <td>
+            <button
+              type="button"
+              class="btn btn-warning btn-sm me-2"
+              (click)="editarPelicula(item)"
+            >
+              Editar
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="eliminarPelicula(item.idPelicula)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

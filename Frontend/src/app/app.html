@@ -1,0 +1,63 @@
+<h1>Sistema de Cine</h1>
+
+@if (usuario) {
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="/home"> Usuarios </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="/anuncios"> Anuncios </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="/peliculas"> Peliculas </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="/funciones"> Funciones </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="/reservas"> Reservas </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="/clasificacion"> Clasificacion </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="/genero"> Genero </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="/sala"> Sala </a>
+          </li>
+        </ul>
+
+        <span class="navbar-text me-3">
+          {{ usuario.nombres }}
+        </span>
+
+        <button class="btn btn-outline-light" (click)="cerrarSesion()">Logout</button>
+      </div>
+    </div>
+  </nav>
+}
+
+<router-outlet />

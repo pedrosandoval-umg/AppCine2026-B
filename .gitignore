@@ -1,0 +1,28 @@
+# Gitignore principal - CinemaPlus 2026
+
+# Backend Spring Boot
+**/target/
+**/.settings/
+**/.classpath
+**/.project
+**/.apt_generated
+**/.sts4-cache/
+
+# Angular / Ionic
+**/node_modules/
+**/.angular/
+**/dist/
+**/www/
+**/coverage/
+
+# Archivos locales
+**/.DS_Store
+**/Thumbs.db
+**/.env
+**/.env.*
+**/application.properties
+**/application-local.properties
+
+# Configuraciones temporales
+**/*.log
+**/*.tmp

@@ -1,0 +1,24 @@
+<p></p>
+
+<form [formGroup]="formulario" (ngSubmit)="login()">
+  <label for="usuario">Usuario:</label>
+  <input type="text" id="usuario" formControlName="usuario" />
+  <div>
+    @if (formulario.get('usuario')?.invalid && formulario.get('usuario')?.touched) {
+      <small>El usuario es obligatorio</small>
+    }
+  </div>
+
+  <br /><br />
+
+  <label for="contrasena">Contraseña:</label>
+  <input type="password" id="contrasena" formControlName="contrasena" />
+  <div>
+    @if (formulario.get('contrasena')?.invalid && formulario.get('contrasena')?.touched) {
+      <small>La contraseña es obligatoria</small>
+    }
+  </div>
+
+  <br /><br />
+  <button type="submit" [disabled]="formulario.invalid">Iniciar Sesión</button>
+</form>

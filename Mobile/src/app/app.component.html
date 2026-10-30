@@ -1,0 +1,141 @@
+<ion-app>
+  <ion-content>
+  <ion-card>
+  <img
+    alt="Silhouette of mountains"
+    src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
+  />
+
+  <ion-card-header>
+    <ion-card-title>CinemaPlus</ion-card-title>
+    <ion-card-subtitle>Inicio de sesión</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    Por favor, inicia sesión para acceder a todas las funciones de CinemaPlus. Si aún no tienes una cuenta, puedes crear una nueva.
+  </ion-card-content>
+</ion-card>
+
+  @if (!cliente) {
+    @if (!crearNuevo) {
+      <!-- LOGIN -->
+      <ion-card>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-input
+                label="Correo electrónico"
+                labelPlacement="stacked"
+                type="email"
+                placeholder="Ingrese su correo"
+                [(ngModel)]="clienteLogin.correo"
+              >
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="Contraseña"
+                labelPlacement="stacked"
+                type="password"
+                placeholder="Ingrese su contraseña"
+                [(ngModel)]="clienteLogin.contrasena"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-list>
+
+          <ion-button expand="block" (click)="login()">
+            Iniciar sesión
+          </ion-button>
+
+          <ion-button expand="block" fill="clear" (click)="crearNuevoBtn()">
+            Crear cuenta
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    } @else {
+      <!-- REGISTRO -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Registro de cliente</ion-card-title>
+          <ion-card-subtitle>Crea tu cuenta CinemaPlus</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-input
+                label="NIT"
+                labelPlacement="stacked"
+                [(ngModel)]="clienteNuevo.nit"
+              >
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="Nombres"
+                labelPlacement="stacked"
+                [(ngModel)]="clienteNuevo.nombres"
+              >
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="Apellidos"
+                labelPlacement="stacked"
+                [(ngModel)]="clienteNuevo.apellidos"
+              >
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="Correo electrónico"
+                labelPlacement="stacked"
+                type="email"
+                [(ngModel)]="clienteNuevo.correo"
+              >
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="Teléfono"
+                labelPlacement="stacked"
+                type="tel"
+                [(ngModel)]="clienteNuevo.telefono"
+              >
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="Contraseña"
+                labelPlacement="stacked"
+                type="password"
+                [(ngModel)]="clienteNuevo.contrasena"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-list>
+
+          <ion-button expand="block" (click)="crear()">
+            Registrarme
+          </ion-button>
+
+          <ion-button expand="block" fill="clear" (click)="regresarLogin()">
+            Regresar al Login
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    }
+  } @else {
+    <!-- CLIENTE AUTENTICADO -->
+    <ion-button expand="block" (click)="logout()"> Cerrar sesión </ion-button>
+  }
+  </ion-content>
+  <ion-router-outlet [hidden]="!cliente"></ion-router-outlet>
+</ion-app>

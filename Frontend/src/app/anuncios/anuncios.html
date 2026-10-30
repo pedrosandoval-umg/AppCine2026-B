@@ -1,0 +1,209 @@
+<div class="container mt-4">
+  <h2>Gestión de Anuncios</h2>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="mb-0">
+        {{ idAnuncioEditar === null ? 'Crear nuevo anuncio' : 'Editar anuncio' }}
+      </h5>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="NuevoAnuncio" (ngSubmit)="guardarAnuncio()">
+        <!-- TÍTULO -->
+        <div class="mb-3">
+          <label for="titulo" class="form-label"> Título: </label>
+
+          <input type="text" id="titulo" class="form-control" formControlName="titulo" />
+
+          @if (NuevoAnuncio.get('titulo')?.invalid && NuevoAnuncio.get('titulo')?.touched) {
+            <small class="text-danger"> El título es obligatorio. </small>
+          }
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="mb-3">
+          <label for="descripcion" class="form-label"> Descripción: </label>
+
+          <textarea id="descripcion" class="form-control" formControlName="descripcion" rows="3">
+          </textarea>
+
+          @if (
+            NuevoAnuncio.get('descripcion')?.invalid && NuevoAnuncio.get('descripcion')?.touched
+          ) {
+            <small class="text-danger"> La descripción es obligatoria. </small>
+          }
+        </div>
+
+        <!-- IMAGEN -->
+        <div class="mb-3">
+          <label for="imagen" class="form-label"> Imagen: </label>
+
+          <input
+            type="file"
+            id="imagen"
+            class="form-control"
+            accept="image/*"
+            (change)="seleccionarImagen($event)"
+          />
+
+          @if (idAnuncioEditar !== null) {
+            <small class="text-muted">
+              Si no selecciona otra imagen, se conservará la imagen actual.
+            </small>
+          }
+        </div>
+
+        <!-- Tipo -->
+        <div class="mb-3">
+          <label for="tipo" class="form-label"> Tipo: </label>
+
+          <input type="text" id="tipo" class="form-control" formControlName="tipo" />
+
+          @if (NuevoAnuncio.get('tipo')?.invalid && NuevoAnuncio.get('tipo')?.touched) {
+            <small class="text-danger"> El tipo es obligatorio. </small>
+          }
+        </div>
+
+          <div class="mb-3">
+          <label for="tipo2" class="form-label"> tipo 2: </label>
+
+          <input type="text" id="tipo2" class="form-control" formControlName="tipo2" />
+
+          @if (NuevoAnuncio.get('tipo2')?.invalid && NuevoAnuncio.get('tipo2')?.touched) {
+            <small class="text-danger"> El tipo es obligatorio. </small>
+          }
+        </div>
+
+        <!-- VISTA PREVIA -->
+        @if (obtenerImagen()) {
+          <div class="mb-3">
+            <label class="form-label"> Vista previa: </label>
+
+            <div>
+              <img
+                [src]="obtenerImagen()"
+                alt="Vista previa"
+                class="img-thumbnail"
+                style="max-width: 250px; max-height: 180px; object-fit: contain"
+              />
+            </div>
+          </div>
+        }
+        
+        <button
+          type="submit"
+          class="btn btn-primary me-2"
+          [disabled]="NuevoAnuncio.invalid || guardando"
+        >
+          {{
+            guardando
+              ? 'Guardando...'
+              : idAnuncioEditar === null
+                ? 'Agregar Anuncio'
+                : 'Guardar Cambios'
+          }}
+        </button>
+
+        <button type="button" class="btn btn-secondary" [disabled]="guardando" (click)="limpiar()">
+          {{ idAnuncioEditar === null ? 'Limpiar' : 'Cancelar Edición' }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- TABLA DE ANUNCIOS -->
+  <h3>Anuncios Publicados</h3>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Descripción</th>
+          <th>Fecha de Publicación</th>
+          <th>Imagen</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+          <th>Tipo</th>
+          <th>Tipo 2</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (anuncio of AnunciosPublicados; track anuncio.idAnuncio) {
+          <tr>
+            <td>{{ anuncio.idAnuncio }}</td>
+
+            <td>{{ anuncio.titulo }}</td>
+
+            <td>{{ anuncio.descripcion }}</td>
+
+            <td>
+              {{ anuncio.fechaPublicacion | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+
+            <td>
+              <img
+                [src]="anuncio.imagen"
+                alt="Imagen"
+                width="70"
+                height="70"
+                style="object-fit: cover"
+              />
+            </td>
+
+            <td>
+              <span class="badge" [ngClass]="anuncio.estado ? 'bg-success' : 'bg-secondary'">
+                {{ anuncio.estado ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+
+            <td>
+              <div class="d-flex gap-2">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                  [disabled]="guardando"
+                  (click)="editarAnuncio(anuncio)"
+                >
+                  Editar
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-sm"
+                  [ngClass]="anuncio.estado ? 'btn-warning' : 'btn-success'"
+                  [disabled]="procesandoEstado !== null"
+                  (click)="cambiarEstado(anuncio)"
+                >
+                  {{
+                    procesandoEstado === anuncio.idAnuncio
+                      ? 'Procesando...'
+                      : anuncio.estado
+                        ? 'Desactivar'
+                        : 'Activar'
+                  }}
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  [disabled]="guardando"
+                  (click)="eliminarAnuncio(anuncio.idAnuncio)"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </td>
+
+            <td>{{ anuncio.tipo }}</td>
+            
+            <td>{{ anuncio.tipo2 }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

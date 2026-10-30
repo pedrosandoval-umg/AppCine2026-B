@@ -1,0 +1,36 @@
+<h2>Configuración de Asientos</h2>
+
+@if (sala) {
+  <h3>{{ sala.nombre }}</h3>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID Sala</th>
+        <th>Nombre</th>
+        <th>Filas</th>
+        <th>Asientos por fila</th>
+        <th>Total de asientos</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>{{ sala.idSala }}</td>
+        <td>{{ sala.nombre }}</td>
+        <td>{{ sala.filas }}</td>
+        <td>{{ sala.asientosPorFila }}</td>
+        <td>
+          {{ sala.filas * sala.asientosPorFila }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+} @else {
+  <p>No se encontraron datos de la sala.</p>
+}
+
+<br />
+
+<button type="button" onclick="history.back()">Regresar</button>

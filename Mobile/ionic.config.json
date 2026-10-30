@@ -1,0 +1,7 @@
+{
+  "name": "appcineb2026",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

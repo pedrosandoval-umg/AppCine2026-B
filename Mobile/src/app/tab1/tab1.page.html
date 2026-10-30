@@ -1,0 +1,51 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cartelera CinemaPlus</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  @for (pelicula of peliculas; track pelicula.idPelicula) {
+
+    <ion-card>
+
+      @if (pelicula.imagenPromocional) {
+        <img
+          [src]="pelicula.imagenPromocional"
+          [alt]="pelicula.titulo"
+        />
+      }
+
+      <ion-card-header>
+
+        <ion-card-title>
+          {{ pelicula.titulo }}
+        </ion-card-title>
+
+        <ion-card-subtitle>
+          Duración: {{ pelicula.duracionMinutos }} minutos
+        </ion-card-subtitle>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <p>{{ pelicula.sinopsis }}</p>
+
+      </ion-card-content>
+
+    </ion-card>
+
+  } @empty {
+
+    <ion-card>
+      <ion-card-content>
+        No hay películas disponibles en cartelera.
+      </ion-card-content>
+    </ion-card>
+
+  }
+
+</ion-content>

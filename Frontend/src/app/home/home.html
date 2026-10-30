@@ -1,0 +1,112 @@
+<h1>Bienvenido a la página de Usuarios</h1>
+
+<h2>Cree un nuevo usuario</h2>
+
+<form [formGroup]="NuevoFormulario" (ngSubmit)="guardarUsuario()">
+  <label for="nombres">nombres:</label>
+  <input type="text" id="nombres" formControlName="nombres" />
+  <div>
+    @if (NuevoFormulario.get('nombres')?.invalid && NuevoFormulario.get('nombres')?.touched) {
+      <small>Los nombres son obligatorios</small>
+    }
+  </div>
+
+  <br /><br />
+
+  <label for="apellidos">Apellidos:</label>
+  <input type="text" id="apellidos" formControlName="apellidos" />
+  <div>
+@if (NuevoFormulario.get('apellidos')?.invalid && NuevoFormulario.get('apellidos')?.touched) {
+      <small>Los apellidos son obligatorios</small>
+    }
+  </div>
+   <br /><br />
+
+  <label for="correo">Correo Electrónico:</label>
+  <input type="email" id="correo" formControlName="correo" />
+  <div>
+    @if (NuevoFormulario.get('correo')?.invalid && NuevoFormulario.get('correo')?.touched) {
+      <small>El correo electrónico es obligatorio</small>
+    }
+  </div>
+   <br /><br />
+
+  <label for="telefono">Teléfono:</label>
+  <input type="number" id="telefono" formControlName="telefono" />
+  <div>
+    @if (NuevoFormulario.get('telefono')?.invalid && NuevoFormulario.get('telefono')?.touched) {
+      <small>El teléfono es obligatorio</small>
+    }
+  </div>
+   <br /><br />
+
+  <label for="usuario">Usuario:</label>
+  <input type="text" id="usuario" formControlName="usuario" />
+  <div>
+    @if (NuevoFormulario.get('usuario')?.invalid && NuevoFormulario.get('usuario')?.touched) {
+      <small>El usuario es obligatorio</small>
+    }
+  </div>
+   <br /><br />
+
+  <label for="contrasena">Contraseña:</label>
+  <input type="password" id="contrasena" formControlName="contrasena" />
+  <div>
+    @if (NuevoFormulario.get('contrasena')?.invalid && NuevoFormulario.get('contrasena')?.touched) {
+      <small>La contraseña es obligatoria</small>
+    }
+  </div>
+   <br /><br />
+
+  <label for="idRol">Rol:</label>
+  <select id="idRol" formControlName="idRol">
+    <option value="">Seleccione un rol</option>
+    <option value="1">Administrador</option>
+    <option value="2">Gerente</option>
+    <option value="3">Cajero</option>
+  </select>
+
+  <br /><br />
+
+  <label for="fotografia">Fotografía:</label>
+  <input type="file" id="fotografia" accept="image/*" (change)="seleccionarFotografia($event)"/> 
+
+
+  <br /><br />
+  <button type="submit" [disabled]="NuevoFormulario.invalid">Agregar Usuario</button>
+</form>
+
+<h2>Usuarios Existentes</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombres</th>
+      <th>Apellidos</th>
+      <th>Correo</th>
+      <th>Teléfono</th>
+      <th>Usuario</th>
+      <th>Contraseña</th>
+      <th>Rol</th>
+      <th>Fotografía</th>
+      <th>Acciones</th>
+    </tr> 
+  </thead>
+  <tbody>
+    @for (usuario of UsuariosActivos; track usuario.idUsuario) {
+    <tr>
+      <td>{{ usuario.idUsuario }}</td>
+      <td>{{ usuario.nombres }}</td>
+      <td>{{ usuario.apellidos }}</td>
+      <td>{{ usuario.correo }}</td>
+      <td>{{ usuario.telefono }}</td>
+      <td>{{ usuario.usuario }}</td>
+      <td>{{ usuario.contrasena }}</td>
+      <td>{{ usuario.idRol }}</td>
+      <td><img [src]="usuario.fotografia" alt="Fotografía" width="50" height="50"/></td>
+      <td><button (click)="eliminarUsuario(usuario.idUsuario)">Eliminar</button></td>
+    </tr>
+    }
+
+  </tbody>

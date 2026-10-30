@@ -1,0 +1,77 @@
+<h2>Salas</h2>
+
+<form (ngSubmit)="guardarSala()">
+  <label>Nombre:</label>
+  <input type="text" name="nombre" [(ngModel)]="sala.nombre" required />
+
+  <br /><br />
+
+  <label>Filas:</label>
+  <input type="number" name="filas" [(ngModel)]="sala.filas" required />
+
+  <br /><br />
+
+  <label>Asientos por fila:</label>
+  <input type="number" name="asientosPorFila" [(ngModel)]="sala.asientosPorFila" required />
+
+  <br /><br />
+
+  <label>Estado:</label>
+  <input type="checkbox" name="estado" [(ngModel)]="sala.estado" />
+
+  <br /><br />
+
+  <button type="submit">Guardar</button>
+
+  <button type="button" (click)="limpiar()">Limpiar</button>
+</form>
+
+<hr />
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Filas</th>
+      <th>Asientos por fila</th>
+      <th>Total asientos</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let item of salas">
+      <td>
+        {{ item.idSala }}
+      </td>
+
+      <td>
+        {{ item.nombre }}
+      </td>
+
+      <td>
+        {{ item.filas }}
+      </td>
+
+      <td>
+        {{ item.asientosPorFila }}
+      </td>
+
+      <td>
+        {{ item.filas * item.asientosPorFila }}
+      </td>
+
+      <td>
+        {{ item.estado ? 'Activo' : 'Inactivo' }}
+      </td>
+
+      <td>
+        <button type="button" (click)="eliminarSala(item.idSala)">Eliminar</button>
+
+        <button type="button" (click)="configurarAsientos(item.idSala)">Configurar asientos</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

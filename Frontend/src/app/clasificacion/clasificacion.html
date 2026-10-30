@@ -1,0 +1,67 @@
+<h2>Clasificaciones</h2>
+
+<form (ngSubmit)="guardar()">
+
+  <label>Nombre:</label>
+
+  <input
+    type="text"
+    name="nombre"
+    [(ngModel)]="clasificacion.nombre"
+    required
+  >
+
+  <button type="submit">
+    Guardar
+  </button>
+
+  <button
+    type="button"
+    (click)="limpiar()"
+  >
+    Limpiar
+  </button>
+
+</form>
+
+<hr>
+
+<table border="1">
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let item of clasificaciones">
+
+      <td>
+        {{ item.idClasificacion }}
+      </td>
+
+      <td>
+        {{ item.nombre }}
+      </td>
+
+      <td>
+
+
+        <button
+          type="button"
+          (click)="eliminar(item.idClasificacion)"
+        >
+          Eliminar
+        </button>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+
+</table>
